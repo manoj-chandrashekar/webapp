@@ -1,5 +1,8 @@
 const express = require('express');
 
+const sequelize = require('./util/database');
+const Account = require('./models/account');
+const Assignment = require('./models/assignment');
 const healthRoutes = require('./routes/health-routes');
 const HttpError = require('./models/http-error');
 
@@ -11,6 +14,21 @@ app.use((req, res, next) => {
     res.setHeader('Cache-Control', 'no-cache');
     next();
 });
+
+Account.hasMany(Assignment, {
+  foreignKey: 'account_id'
+});
+Assignment.belongsTo(Account, {
+  foreignKey: 'account_id'
+});
+
+sequelize.sync({alter: true})
+  .then(() => {
+    console.log('Database is synchronized with the model.');
+  })
+  .catch((err) => {
+    console.error('Error synchronizing the database:', err);
+  });
 
 app.use('/healthz', healthRoutes);
 
