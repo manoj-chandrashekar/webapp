@@ -1,5 +1,4 @@
-process.env.NODE_ENV = 'test';
-const sequelize = require('../util/database');
+// process.env.NODE_ENV = 'test';
 
 const chai = require('chai');
 const expect = chai.expect;
