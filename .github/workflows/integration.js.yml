@@ -5,7 +5,7 @@ name: Integration-Test-CI
 
 on:
   push:
-    branches: [ "feature-wf3" ]
+    branches: [ "main", "feature-wf3" ]
   pull_request:
     branches: [ "main" ]
 
