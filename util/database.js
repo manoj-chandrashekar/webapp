@@ -5,7 +5,7 @@ const username = 'root';
 const password = 'NeuGr@d2022';
 
 const sequelize = new Sequelize("webapp", username, password, {
-    dialect: 'mariadb',
+    dialect: 'mysql',
     host: '127.0.0.1'
 });
 
