@@ -6,7 +6,7 @@ const password = 'NeuGr@d2022';
 
 const sequelize = new Sequelize("webapp", username, password, {
     dialect: 'mysql',
-    host: '127.0.0.1'
+    host: 'localhost'
 });
 
 module.exports = sequelize;
