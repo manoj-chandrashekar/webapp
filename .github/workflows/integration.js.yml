@@ -21,6 +21,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Install MySQL client
+      run: |
+        sudo apt-get update
+        sudo apt-get install mysql-client
+
+    - name: Initialize MySQL database
+      run: sudo systemctl start mysql.service
+    #   run: mysql -u root -e "CREATE DATABASE IF NOT EXISTS test;"
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
