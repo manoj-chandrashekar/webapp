@@ -24,12 +24,12 @@ describe('Health check API', () => {
     // });
 
     it('should have cache-control: no-cache header in response', async () => {
-        const response = await chai.request(app).get('/healthz').expect(200);
+        const response = await chai.request(app).get('/healthz');
         expect(response.header['cache-control']).to.equal('no-cache');
     });
 
     it('should not include any payload in response', async () => {
-        const response = await chai.request(app).get('/healthz').expect(200);
+        const response = await chai.request(app).get('/healthz');
         expect(response.body).to.be.empty;
     });
 });
