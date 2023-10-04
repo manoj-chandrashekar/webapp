@@ -2,7 +2,6 @@
 
 const chai = require('chai');
 const expect = chai.expect;
-const request = require('supertest');
 
 const chaiHttp = require('chai-http');
 
@@ -24,13 +23,13 @@ describe('Health check API', () => {
     //     expect(response.status).to.equal(200);
     // });
 
-    // it('should have cache-control: no-cache header in response', async () => {
-    //     const response = await request(app).get('/healthz').expect(200);
-    //     expect(response.header['cache-control']).to.equal('no-cache');
-    // });
+    it('should have cache-control: no-cache header in response', async () => {
+        const response = await chai.request(app).get('/healthz').expect(200);
+        expect(response.header['cache-control']).to.equal('no-cache');
+    });
 
-    // it('should not include any payload in response', async () => {
-    //     const response = await request(app).get('/healthz').expect(200);
-    //     expect(response.body).to.be.empty;
-    // });
+    it('should not include any payload in response', async () => {
+        const response = await chai.request(app).get('/healthz').expect(200);
+        expect(response.body).to.be.empty;
+    });
 });
