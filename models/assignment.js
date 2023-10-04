@@ -33,20 +33,21 @@ const Assignment = sequelize.define('Assignment', {
         type: DataTypes.DATE,
         allowNull: false,
     },
-    createdAt: {
+    assignment_created: {
         type: DataTypes.DATE,
-        field: 'assignment_created', // Custom column name for createdAt
         allowNull: false,
         defaultValue: Sequelize.NOW,
         readOnly: true,
     },
-    updatedAt: {
+    assignment_updated: {
         type: DataTypes.DATE,
-        field: 'assignment_updated', // Custom column name for updatedAt
         allowNull: false,
         defaultValue: Sequelize.NOW,
         readOnly: true,
     },
+}, {
+    createdAt: 'assignment_created',
+    updatedAt: 'assignment_updated',
 });
 
 module.exports = Assignment;
