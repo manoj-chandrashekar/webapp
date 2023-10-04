@@ -15,6 +15,12 @@ const createAssignment = async (req, res, next) => {
         next(inputError);
     }
 
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        const inputError = new HttpError(errors.array()[0].msg, 422);
+        return next(inputError);
+    }
+
     try {
         const createdAssignment = await Assignment.create(assignment);
         await createdAssignment.setAccount(account);
@@ -144,9 +150,14 @@ const updateAssignment = async (req, res, next) => {
     }
 };
 
+const unsupportedMethods = (req, res, next) => {
+    res.status(405).send();
+};
+
 exports.createAssignment = createAssignment;
 exports.getAll = getAll;
 exports.getById = getById;
 exports.deleteAssignment = deleteAssignment;
 exports.updateAssignment = updateAssignment;
+exports.unsupportedMethods = unsupportedMethods;
 

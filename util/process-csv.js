@@ -1,14 +1,17 @@
 const bcrypt = require('bcrypt');
 const csv = require('csv-parser');
 const fs = require('fs');
+const path = require('path');
 
 const Account = require('../models/account');
 
 const processCsv = async() => {
+    //update file path for local run and vm run
+    const filePath = 'users.csv' //path.join('/', 'opt', 'users.csv');
     const csvData = [];
     console.log('Current working directory:', process.cwd());
 
-    fs.createReadStream('users.csv')
+    fs.createReadStream(filePath) 
         .pipe(csv())
         .on('data', (row) => {
             csvData.push(row);

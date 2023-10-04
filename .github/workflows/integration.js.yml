@@ -4,8 +4,6 @@
 name: Integration-Test-CI
 
 on:
-  push:
-    branches: [ "pr-wf2" ]
   pull_request:
     branches: [ "main" ]
 
