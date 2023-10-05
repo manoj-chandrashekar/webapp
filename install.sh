@@ -10,7 +10,6 @@ sudo apt-get install -y nodejs npm
 node -v
 npm -v
 
-sudo apt-get install -y unzip
 # Install MariaDB
 sudo apt-get install -y mariadb-server
 
