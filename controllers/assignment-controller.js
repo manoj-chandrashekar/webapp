@@ -97,7 +97,7 @@ const deleteAssignment = async (req, res, next) => {
     }
 
     if (assignment.account_id !== account.id) {
-        return res.status(401).send();
+        return res.status(403).send();
     }
 
     await assignment.destroy();
@@ -133,7 +133,7 @@ const updateAssignment = async (req, res, next) => {
         }
 
         if (fetchedAssignment.account_id !== account.id) {
-            return res.status(401).send();
+            return res.status(403).send();
         }
 
         await fetchedAssignment.update(assignment, { validate: true });
