@@ -12,6 +12,16 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: NeuGr@d2022
+          MYSQL_DATABASE: webapp
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     strategy:
       matrix:
         node-version: [16.x]
@@ -34,4 +44,10 @@ jobs:
         cache: 'npm'
     - run: npm i
     - run: npm run build --if-present
-    - run: npm test
+    - name: Run Tests
+      env:
+        DB_HOST: localhost
+        DB_USER: root
+        DB_PASSWORD: NeuGr@d2022
+        DB_NAME: webapp
+      run: npm test
