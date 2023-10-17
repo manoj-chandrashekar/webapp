@@ -42,7 +42,6 @@ source "amazon-ebs" "webapp-ami" {
   ami_description = "CSYE6225 Webapp AMI"
   instance_type   = "t2.micro"
   region          = "${var.aws_region}"
-  ami_users       = ["962516605177", "767594034451"]
   ami_regions     = "${var.ami_regions}"
 
   source_ami_filter {
@@ -66,6 +65,7 @@ source "amazon-ebs" "webapp-ami" {
 }
 
 build {
+  ami_users = ["962516605177", "767594034451"]
   sources = [
     "source.amazon-ebs.webapp-ami"
   ]
