@@ -3,6 +3,8 @@
 # Update the package list
 sudo apt-get update
 
+sudo apt-get upgrade -y
+
 # Install Node.js and npm
 sudo apt-get install -y nodejs npm
 
@@ -13,9 +15,20 @@ npm -v
 # Install MariaDB
 sudo apt-get install -y mariadb-server
 
+sudo systemctl enable mariadb
 # Start the MariaDB service
 sudo systemctl start mariadb
 
-# Secure the MariaDB installation
-sudo mysql_secure_installation
+# printf "yes\nno\nno\nyes\nyes\nyes\nyes\n" | sudo mysql_secure_installation
+password="password1"
+printf "%s\nno\nno\nyes\nyes\nyes\nyes\n" "$password" | sudo mysql_secure_installation -p$password
+
+sudo mysql -u root -p$password
+
+sudo mariadb -e "CREATE DATABASE webapp";
+sudo mariadb -e "CREATE USER 'user1'@localhost IDENTIFIED BY 'password1'";
+sudo mariadb -e "GRANT ALL PRIVILEGES ON *.* TO 'user1'@localhost IDENTIFIED BY 'password1'";
+sudo mariadb -e "FLUSH PRIVILEGES";
+
+
 
