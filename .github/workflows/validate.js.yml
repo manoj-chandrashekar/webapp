@@ -18,7 +18,6 @@ jobs:
 
             - name: Install Packer
               run: |
-                cd packer
                 chmod +x install.sh
                 wget https://releases.hashicorp.com/packer/1.7.4/packer_1.7.4_linux_amd64.zip
                 sudo rm -f /usr/local/bin/packer
@@ -29,11 +28,11 @@ jobs:
 
             - name: Packer Init
               run: |
-                packer init packer/aws-debian.pkr.hcl
+                packer init aws-debian.pkr.hcl
 
             - name: Format Packer Template
               run: |
-                packer fmt packer/aws-debian.pkr.hcl
+                packer fmt aws-debian.pkr.hcl
                 if [ $? -ne 0]; then
                     echo "Packer template format is incorrect."
                     exit 1
@@ -41,7 +40,6 @@ jobs:
 
             - name: Validate Packer Template
               run: |
-                cd packer
                 packer validate aws-debian.pkr.hcl
                 if [ $? -ne 0 ]; then
                     echo "Packer template validation failed."
