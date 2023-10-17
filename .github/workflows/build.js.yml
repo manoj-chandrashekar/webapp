@@ -1,8 +1,6 @@
 name: Build-Artifact-CI
 
 on:
-  pull_request:
-    branches: [ "main" ]
   push:
     branches: [ "feature-packer" ]
 
