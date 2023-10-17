@@ -24,9 +24,12 @@ jobs:
                 sudo mv packer /usr/local/bin/
                 packer --version
                 sudo rm packer_1.7.4_linux_amd64.zip
+                pwd
 
             - name: Packer Init
               run: |
+                pwd
+                ls -al
                 packer init packer/aws-debian.pkr.hcl
 
             - name: Format Packer Template
