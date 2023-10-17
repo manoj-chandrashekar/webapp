@@ -35,7 +35,7 @@ sudo apt-get install -y unzip
 
 cd /opt/
 sudo mkdir webapp
-unzip webapp.zip -d wepapp
+sudo unzip webapp.zip -d wepapp
 rm webapp.zip
 cd webapp
 mv users.csv /opt/
