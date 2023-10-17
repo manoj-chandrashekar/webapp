@@ -16,54 +16,48 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v2
 
-            - name: Install Packer
+            - name: Add permission
               run: |
-                cd packer
-                chmod +x install.sh
-                wget https://releases.hashicorp.com/packer/1.7.4/packer_1.7.4_linux_amd64.zip
-                sudo rm -f /usr/local/bin/packer
-                echo "before unzip"
-                ls -al
-                unzip -o packer_1.7.4_linux_amd64.zip
-                echo "after unzip"
-                ls -al
-                sudo mv packer /usr/local/bin/
-                echo "after move"
-                ls -al
-                packer --version
-                sudo rm packer_1.7.4_linux_amd64.zip
-                pwd
+                chmod +x packer/install.sh
 
-            - name: Packer Init
-              run: |
-                pwd
-                ls -al
-                packer init packer/aws-debian.pkr.hcl
-
-            - name: Format Packer Template
-              run: |
-                packer fmt packer/aws-debian.pkr.hcl
-
-            - name: Validate Packer Template
-              run: |
-                ls -al packer/
-                cd packer
-                packer validate aws-debian.pkr.hcl
+            # - name: Install Packer
+            #   run: |
+            #     cd packer
+            #     chmod +x install.sh
+            #     wget https://releases.hashicorp.com/packer/1.7.4/packer_1.7.4_linux_amd64.zip
+            #     sudo rm -f /usr/local/bin/packer
+            #     unzip -o packer_1.7.4_linux_amd64.zip
+            #     sudo mv packer /usr/local/bin/
+            #     packer --version
+            #     sudo rm packer_1.7.4_linux_amd64.zip
 
             # - name: Packer Init
-            #   uses: hashicorp/packer-github-actions@master
-            #   with:
-            #     command: init
-            #     target: packer/aws-debian.pkr.hcl
+            #   run: |
+            #     packer init packer/aws-debian.pkr.hcl
 
             # - name: Format Packer Template
-            #   uses: hashicorp/packer-github-actions@master
-            #   with:
-            #     command: fmt
-            #     target: packer/aws-debian.pkr.hcl
+            #   run: |
+            #     packer fmt packer/aws-debian.pkr.hcl
 
             # - name: Validate Packer Template
-            #   uses: hashicorp/packer-github-actions@master
-            #   with:
-            #     command: validate
-            #     target: packer/aws-debian.pkr.hcl
+            #   run: |
+            #     cd packer
+            #     packer validate aws-debian.pkr.hcl
+
+            - name: Packer Init
+              uses: hashicorp/packer-github-actions@master
+              with:
+                command: init
+                target: packer/aws-debian.pkr.hcl
+
+            - name: Format Packer Template
+              uses: hashicorp/packer-github-actions@master
+              with:
+                command: fmt
+                target: packer/aws-debian.pkr.hcl
+
+            - name: Validate Packer Template
+              uses: hashicorp/packer-github-actions@master
+              with:
+                command: validate
+                target: packer/aws-debian.pkr.hcl
