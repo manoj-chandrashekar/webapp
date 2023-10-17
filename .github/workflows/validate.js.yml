@@ -19,9 +19,15 @@ jobs:
             - name: Install Packer
               run: |
                 wget https://releases.hashicorp.com/packer/1.7.4/packer_1.7.4_linux_amd64.zip
-                sudo rm -rf packer
+                sudo rm -f /usr/local/bin/packer
+                echo "before unzip"
+                ls -al
                 unzip -o packer_1.7.4_linux_amd64.zip
+                echo "after unzip"
+                ls -al
                 sudo mv packer /usr/local/bin/
+                echo "after move"
+                ls -al
                 packer --version
                 sudo rm packer_1.7.4_linux_amd64.zip
                 pwd
