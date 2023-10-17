@@ -71,6 +71,6 @@ build {
   ]
 
   provisioner "shell" {
-    scripts = ["install.sh"]
+    scripts = ["./install.sh"]
   }
 }
