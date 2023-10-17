@@ -22,7 +22,7 @@ jobs:
                 unzip -o packer_1.7.4_linux_amd64.zip
                 sudo mv packer /usr/local/bin/
                 packer --version
-                rm packer_1.7.4_linux_amd64.zip
+                sudo rm -rf packer_1.7.4_linux_amd64.zip packer
 
             - name: Packer Init
               run: |
