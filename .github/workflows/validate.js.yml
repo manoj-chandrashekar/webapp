@@ -45,6 +45,7 @@ jobs:
 
             - name: Validate Packer Template
               run: |
+                ls -al packer/
                 packer validate packer/aws-debian.pkr.hcl
 
             # - name: Packer Init
