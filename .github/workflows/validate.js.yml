@@ -16,6 +16,12 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v2
 
+            - name: Packer Init
+              uses: hashicorp/packer-github-actions@master
+              with:
+                command: init
+                target: packer/aws-debian.pkr.hcl
+
             - name: Format Packer Template
               uses: hashicorp/packer-github-actions@master
               with:
