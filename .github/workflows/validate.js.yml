@@ -33,18 +33,10 @@ jobs:
             - name: Format Packer Template
               run: |
                 packer fmt -check aws-debian.pkr.hcl
-                if [ $? -ne 0 ]; then
-                    echo "Packer template format is incorrect."
-                    exit 1
-                fi
 
             - name: Validate Packer Template
               run: |
                 packer validate aws-debian.pkr.hcl
-                if [ $? -ne 0 ]; then
-                    echo "Packer template validation failed."
-                    exit 1
-                fi
 
             # - name: Set permission
             #   run: |

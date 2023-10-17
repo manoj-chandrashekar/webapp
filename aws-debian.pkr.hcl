@@ -45,7 +45,7 @@ source "amazon-ebs" "webapp-ami" {
   ami_users       = ["962516605177", "767594034451"]
   ami_regions     = "${var.ami_regions}"
 
-    source_ami_filter {
+  source_ami_filter {
     filters = {
       name                = "debian-12-amd64-*"
       root-device-type    = "ebs"
@@ -57,7 +57,7 @@ source "amazon-ebs" "webapp-ami" {
   ssh_username = "${var.ssh_username}"
   subnet_id    = "${var.subnet_id}"
 
-  launch_block_device_mappings {
+      launch_block_device_mappings {
     delete_on_termination = true
     device_name           = "/dev/xvda"
     volume_size           = 8
