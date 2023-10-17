@@ -19,6 +19,7 @@ jobs:
             - name: Install Packer
               run: |
                 cd packer
+                chmod +x install.sh
                 wget https://releases.hashicorp.com/packer/1.7.4/packer_1.7.4_linux_amd64.zip
                 sudo rm -f /usr/local/bin/packer
                 echo "before unzip"
