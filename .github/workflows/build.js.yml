@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build artifact
-        run: zip -r webapp.zip ./ -x "node_modules/*" ".vscode/*" ".git/*" ".gitignore"
+        run: zip -r webapp.zip ./ -x "node_modules/*" ".vscode/*" ".git/*" ".gitignore" "package-lock.json"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
