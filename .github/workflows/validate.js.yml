@@ -37,15 +37,15 @@ jobs:
               run: |
                 pwd
                 ls -al
-                packer init .
+                packer init packer/aws-debian.pkr.hcl
 
             - name: Format Packer Template
               run: |
-                packer fmt .
+                packer fmt packer/aws-debian.pkr.hcl
 
             - name: Validate Packer Template
               run: |
-                packer validate .
+                packer validate packer/aws-debian.pkr.hcl
 
             # - name: Packer Init
             #   uses: hashicorp/packer-github-actions@master
