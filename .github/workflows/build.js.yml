@@ -7,14 +7,47 @@ on:
     branches: [ "feature-packer" ]
 
 jobs:
+
+  nodejs_tests:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: NeuGr@d2022
+          MYSQL_DATABASE: webapp
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+  
+    strategy:
+      matrix:
+        node-version: [16.x]
+  
+    steps:
+      - uses: actions/checkout@v3
+  
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm i
+      - run: npm run build --if-present
+      - name: Run Tests
+        env:
+          DB_HOST: localhost
+          DB_USER: root
+          DB_PASSWORD: NeuGr@d2022
+          DB_NAME: webapp
+        run: npm test
+
   build_artifact_and_ami:
+    needs: nodejs_tests
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Call integration workflow
-        uses: ./.github/workflows/integration.js.yml
 
       - name: Build artifact
         run: zip -r webapp.zip ./ -x "node_modules/*" ".vscode/*" ".git/*" ".gitignore"

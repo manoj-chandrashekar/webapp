@@ -16,6 +16,9 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v2
 
+            - name: Build zip file
+              run: zip -r webapp.zip ./ -x "node_modules/*" ".vscode/*" ".git/*" ".gitignore"
+
             - name: Install Packer
               run: |
                 chmod +x install.sh
