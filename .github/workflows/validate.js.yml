@@ -32,7 +32,7 @@ jobs:
 
             - name: Format Packer Template
               run: |
-                packer fmt aws-debian.pkr.hcl
+                /usr/local/bin/packer fmt aws-debian.pkr.hcl
                 if [ $? -ne 0]; then
                     echo "Packer template format is incorrect."
                     exit 1
