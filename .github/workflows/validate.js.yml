@@ -57,7 +57,6 @@ jobs:
                 target: packer/aws-debian.pkr.hcl
 
             - name: Validate Packer Template
-              uses: hashicorp/packer-github-actions@master
-              with:
-                command: validate
-                target: packer/aws-debian.pkr.hcl
+              run: |
+                cd packer
+                packer validate aws-debian.pkr.hcl
