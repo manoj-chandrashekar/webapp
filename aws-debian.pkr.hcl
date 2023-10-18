@@ -85,6 +85,11 @@ build {
     destination = "/home/admin/"
   }
 
+  provisioner "file" {
+    source      = "application.service"
+    destination = "/home/admin/application.service"
+  }
+
   provisioner "shell" {
     scripts = ["./install.sh"]
   }
