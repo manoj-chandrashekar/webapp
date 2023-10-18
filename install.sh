@@ -33,7 +33,7 @@ sudo mariadb -e "exit";
 
 sudo apt-get install -y unzip
 
-cd /home/admin
+cd /home/admin/
 pwd
 sudo mkdir webapp
 ls -al

@@ -82,7 +82,7 @@ build {
 
   provisioner "file" {
     source      = "webapp.zip"
-    destination = "/home/admin"
+    destination = "/home/admin/"
   }
 
   provisioner "shell" {
