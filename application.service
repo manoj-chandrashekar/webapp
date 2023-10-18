@@ -1,0 +1,17 @@
+[Unit]
+Description= CSYE 6225 Webapp
+After=multi-user.target
+
+[Service]
+User=debian
+Type=simple
+StandardOutput=syslog
+ExecStart=/usr/bin/node /home/admin/webapp/app.js
+SyslogIdentifier=application_server
+StandardError=syslog
+Restart=always
+RestartSec=10
+Environment=NODE_PORT=8080
+
+[Install]
+WantedBy=multi-user.target

@@ -42,7 +42,10 @@ sudo rm webapp.zip
 cd webapp
 sudo cp users.csv /home/admin/
 sudo npm i
-sudo node app.js
+sudo mv application.service /etc/systemd/system/application.service
+sudo systemctl daemon-reload
+sudo systemctl enable application.service
+sudo systemctl start application.service
 
 
 
