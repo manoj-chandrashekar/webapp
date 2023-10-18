@@ -1,8 +1,9 @@
 name: Build-Artifact-CI
 
 on:
-  push:
-    branches: [ "feature-build-workflow" ]
+  pull_request:
+    types:
+      - closed
 
 jobs:
 

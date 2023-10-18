@@ -6,8 +6,6 @@ name: Packer-Validate-CI
 on:
   pull_request:
     branches: [ "main" ]
-  push:
-    branches: [ "feature-packer" ]
 
 jobs:
     packer: 
