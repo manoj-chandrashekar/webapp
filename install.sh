@@ -33,8 +33,10 @@ sudo mariadb -e "exit";
 
 sudo apt-get install -y unzip
 
-cd /home/ec2-user
+cd /home/admin
+pwd
 sudo mkdir webapp
+ls -al
 sudo unzip webapp.zip -d wepapp
 rm webapp.zip
 cd webapp

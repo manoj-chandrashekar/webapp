@@ -82,7 +82,7 @@ build {
 
   provisioner "file" {
     source      = "webapp.zip"
-    destination = "/home/ec2-user"
+    destination = "/home/admin"
   }
 
   provisioner "shell" {
