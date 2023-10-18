@@ -13,8 +13,8 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_ROOT_PASSWORD: NeuGr@d2022
-          MYSQL_DATABASE: webapp
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.DB_NAME }}
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -37,8 +37,8 @@ jobs:
         env:
           DB_HOST: localhost
           DB_USER: root
-          DB_PASSWORD: NeuGr@d2022
-          DB_NAME: webapp
+          DB_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
         run: npm test
 
   build_artifact_and_ami:

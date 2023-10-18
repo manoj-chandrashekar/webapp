@@ -45,7 +45,7 @@ source "amazon-ebs" "webapp-ami" {
   ami_users       = ["962516605177", "767594034451"]
   ami_regions     = "${var.ami_regions}"
 
-  source_ami_filter {
+    source_ami_filter {
     filters = {
       name                = "debian-12-amd64-*"
       root-device-type    = "ebs"
