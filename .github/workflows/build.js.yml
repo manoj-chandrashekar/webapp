@@ -2,7 +2,7 @@ name: Build-Artifact-CI
 
 on:
   push:
-    branches: [ "feature-packer" ]
+    branches: [ "feature-build-workflow" ]
 
 jobs:
 
