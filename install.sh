@@ -46,9 +46,3 @@ sudo mv /home/admin/application.service /etc/systemd/system/application.service
 sudo systemctl daemon-reload
 sudo systemctl enable application.service
 sudo systemctl start application.service
-
-
-
-
-
-
