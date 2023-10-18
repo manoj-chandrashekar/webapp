@@ -19,7 +19,6 @@ sudo systemctl enable mariadb
 # Start the MariaDB service
 sudo systemctl start mariadb
 
-# printf "yes\nno\nno\nyes\nyes\nyes\nyes\n" | sudo mysql_secure_installation
 password="NeuGr@d2022"
 printf "%s\nno\nno\nyes\nyes\nyes\nyes\n" "$password" | sudo mysql_secure_installation -p$password
 
@@ -42,7 +41,21 @@ sudo rm webapp.zip
 cd webapp
 sudo cp users.csv /home/admin/
 sudo npm i
-sudo mv /home/admin/application.service /etc/systemd/system/application.service
+# sudo mv /home/admin/application.service /etc/systemd/system/application.service
+sudo sh -c "echo '[Unit]
+Description=My NPM Service
+After=network.target
+
+[Service]
+User=admin
+WorkingDirectory=/home/admin/webapp
+ExecStart=/usr/bin/npm start
+Restart=always
+
+[Install]
+WantedBy=multi-user.target' | sudo tee /etc/systemd/system/webapp.service"
+
 sudo systemctl daemon-reload
-sudo systemctl enable application.service
-sudo systemctl start application.service
+sudo systemctl enable webapp
+sudo systemctl start webapp
+sudo systemctl status webapp
