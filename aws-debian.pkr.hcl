@@ -70,24 +70,9 @@ build {
     "source.amazon-ebs.webapp-ami"
   ]
 
-  # provisioner "shell" {
-  #   environment_vars = [
-  #     "CHECKPOINT_DISABLE=1",
-  #     "DEBIAN_FRONTEND=noninteractive"
-  #   ]
-  #   inline = [
-  #     "sudo chown admin:admin /opt"
-  #   ]
-  # }
-
   provisioner "file" {
     source      = "webapp.zip"
     destination = "/home/admin/"
-  }
-
-  provisioner "file" {
-    source      = "application.service"
-    destination = "/home/admin/application.service"
   }
 
   provisioner "shell" {
