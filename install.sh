@@ -40,7 +40,7 @@ ls -al
 sudo unzip webapp.zip -d webapp
 sudo rm webapp.zip
 cd webapp
-sudo mv users.csv /opt/
+sudo mv users.csv /home/admin/
 sudo npm i
 sudo node app.js
 
