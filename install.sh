@@ -41,21 +41,9 @@ sudo rm webapp.zip
 cd webapp
 sudo cp users.csv /home/admin/
 sudo npm i
-# sudo mv /home/admin/application.service /etc/systemd/system/application.service
-sudo sh -c "echo '[Unit]
-Description=My NPM Service
-After=network.target
-
-[Service]
-User=admin
-WorkingDirectory=/home/admin/webapp
-ExecStart=/usr/bin/npm start
-Restart=always
-
-[Install]
-WantedBy=multi-user.target' | sudo tee /etc/systemd/system/webapp.service"
+sudo mv /home/admin/application.service /etc/systemd/system/application.service
 
 sudo systemctl daemon-reload
-sudo systemctl enable webapp
-sudo systemctl start webapp
-sudo systemctl status webapp
+sudo systemctl enable application
+sudo systemctl start application
+sudo systemctl status application

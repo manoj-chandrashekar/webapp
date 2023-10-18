@@ -1,17 +1,12 @@
 [Unit]
-Description= CSYE 6225 Webapp
-After=multi-user.target
+Description=My NPM Service
+After=network.target
 
 [Service]
-User=debian
-Type=simple
-StandardOutput=syslog
-ExecStart=/usr/bin/node /home/admin/webapp/app.js
-SyslogIdentifier=application_server
-StandardError=syslog
+User=admin
+WorkingDirectory=/home/admin/webapp
+ExecStart=/usr/bin/npm start
 Restart=always
-RestartSec=10
-Environment=NODE_PORT=8080
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target'
