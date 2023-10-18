@@ -85,4 +85,3 @@ jobs:
           target: aws-debian.pkr.hcl
         env:
           PACKER_LOG: 1
-
