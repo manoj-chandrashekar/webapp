@@ -14,7 +14,7 @@ To build the application, follow these steps:
 
 1. Clone the repository to your local machine.
 2. Navigate to the project directory in your terminal.
-3. Run `npm install` to install the project dependencies.
+3. Run `npm install` to install the project dependencies.jvj
 4. Create a MySQL database called `webapp` for the application.
 5. Update the username and password variables in database.js to match your MySQL credentials.
 6. Run `npm start` to build and run the application.
