@@ -11,13 +11,13 @@ const createAssignment = async (req, res, next) => {
     }
 
     if (assignment.id || assignment.id === '' || assignment.assignment_created || assignment.assignment_updated) {
-        const inputError = new HttpError('Invalid input passed', 422);
+        const inputError = new HttpError('Invalid input passed', 400);
         next(inputError);
     }
 
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
-        const inputError = new HttpError(errors.array()[0].msg, 422);
+        const inputError = new HttpError(errors.array()[0].msg, 400);
         return next(inputError);
     }
 
@@ -38,7 +38,7 @@ const createAssignment = async (req, res, next) => {
         res.status(201).json(responseAssignment);
     } catch (error) {
         if (error.name === 'SequelizeValidationError') {
-            const validationError = new HttpError('Invalid input passed', 422);
+            const validationError = new HttpError('Invalid input passed', 400);
             return next(validationError);
         } else {
             const otherError = new HttpError('Some error occured', error.code);
@@ -114,13 +114,13 @@ const updateAssignment = async (req, res, next) => {
     }
 
     if (assignment.id || assignment.id === '' || assignment.assignment_created || assignment.assignment_updated) {
-        const inputError = new HttpError('Invalid input passed', 422);
+        const inputError = new HttpError('Invalid input passed', 400);
         return next(inputError);
     }
 
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
-        const inputError = new HttpError(errors.array()[0].msg, 422);
+        const inputError = new HttpError(errors.array()[0].msg, 400);
         return next(inputError);
     }
 
@@ -141,7 +141,7 @@ const updateAssignment = async (req, res, next) => {
     } catch(error) {
         console.error('Validation Errors:', error);
         if (error.name === 'SequelizeValidationError') {
-            const validationError = new HttpError('Invalid input passed', 422);
+            const validationError = new HttpError('Invalid input passed', 400);
             return next(validationError);
         } else {
             const otherError = new HttpError('Some error occured', error.code);

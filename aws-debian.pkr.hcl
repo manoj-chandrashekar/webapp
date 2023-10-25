@@ -10,19 +10,13 @@ packer {
 variable "aws_region" {
   type        = string
   description = "AWS region to deploy to"
-  default     = "us-east-1"
+  default     = "{{user `aws_region`}}"
 }
-
-# variable "source_ami" {
-#   type        = string
-#   description = "AMI to use as a base for the new AMI"
-#   default     = "ami-06db4d78cb1d3bbf9"
-# }
 
 variable "ssh_username" {
   type        = string
   description = "The username to use to connect to the EC2 instance"
-  default     = "admin"
+  default     = "{{user `ssh_username`}}"
 }
 
 variable "subnet_id" {
@@ -33,7 +27,7 @@ variable "subnet_id" {
 
 variable "ami_regions" {
   type        = list(string)
-  default     = ["us-east-1"]
+  default     = {{"user `ami_regions`"}}
   description = "Regions where AMI should be copied"
 }
 
