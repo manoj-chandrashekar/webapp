@@ -12,24 +12,6 @@ sudo apt-get install -y nodejs npm
 node -v
 npm -v
 
-# # Install MariaDB
-# sudo apt-get install -y mariadb-server
-
-# sudo systemctl enable mariadb
-# # Start the MariaDB service
-# sudo systemctl start mariadb
-
-# password="NeuGr@d2022"
-# printf "%s\nno\nno\nyes\nyes\nyes\nyes\n" "$password" | sudo mysql_secure_installation -p$password
-
-# sudo mysql -u root -p$password
-
-# sudo mariadb -e "CREATE DATABASE webapp";
-# sudo mariadb -e "CREATE USER 'user1'@localhost IDENTIFIED BY 'password1'";
-# sudo mariadb -e "GRANT ALL PRIVILEGES ON *.* TO 'user1'@localhost IDENTIFIED BY 'password1'";
-# sudo mariadb -e "FLUSH PRIVILEGES";
-# sudo mariadb -e "exit";
-
 sudo apt-get install -y unzip
 
 sudo groupadd csye6225
@@ -49,15 +31,6 @@ cd webapp
 sudo cp users.csv /home/csye6225/
 sudo npm i
 
-# cd /home/admin/
-# pwd
-# sudo mkdir webapp
-# ls -al
-# sudo unzip webapp.zip -d webapp
-# sudo rm webapp.zip
-# cd webapp
-# sudo cp users.csv /home/admin/
-# sudo npm i
 sudo mv /home/admin/webapp.service /etc/systemd/system/webapp.service
 
 sudo systemctl daemon-reload
