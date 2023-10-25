@@ -75,6 +75,11 @@ build {
     destination = "/home/admin/"
   }
 
+  provisioner "file" {
+    source      = "webapp.service"
+    destination = "/home/admin/"
+  }
+
   provisioner "shell" {
     scripts = ["./install.sh"]
   }
