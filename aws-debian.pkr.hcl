@@ -27,7 +27,7 @@ variable "subnet_id" {
 
 variable "ami_regions" {
   type        = list(string)
-  default     = {{"user `ami_regions`"}}
+  default     = "{{user `ami_regions`}}"
   description = "Regions where AMI should be copied"
 }
 
