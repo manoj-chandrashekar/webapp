@@ -43,6 +43,7 @@ ls -al
 sudo unzip webapp.zip -d webapp
 sudo rm webapp.zip
 sudo chown -R csye6225:csye6225 webapp
+sudo chown -R csye6225:csye6225 /etc/environment
 sudo chmod -R 755 webapp
 cd webapp
 sudo cp users.csv /home/csye6225/
