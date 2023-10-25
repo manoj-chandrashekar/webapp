@@ -75,7 +75,7 @@ jobs:
         uses: hashicorp/packer-github-actions@master
         with:
           command: build
-          arguments: '-var-file=variables.hcl -color=false -on-error=abort'
+          arguments: '-var-file="variables.pkrvars.hcl" -color=false -on-error=abort'
           target: aws-debian.pkr.hcl
         env:
           PACKER_LOG: 1
