@@ -68,14 +68,14 @@ jobs:
         uses: hashicorp/packer-github-actions@master
         with:
           command: validate
-          arguments: '-syntax-only -var-file="variables.pkrvars.hcl"'
+          arguments: '-syntax-only'
           target: aws-debian.pkr.hcl
 
       - name: Build AMI
         uses: hashicorp/packer-github-actions@master
         with:
           command: build
-          arguments: '-var-file="variables.pkrvars.hcl" -color=false -on-error=abort'
+          arguments: '-color=false -on-error=abort'
           target: aws-debian.pkr.hcl
         env:
           PACKER_LOG: 1
