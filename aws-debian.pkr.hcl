@@ -7,17 +7,17 @@ packer {
   }
 }
 
-variable "aws_region" {
-  type        = string
-  description = "AWS region to deploy to"
-  default     = "{{user `aws_region`}}"
-}
+# variable "aws_region" {
+#   type        = string
+#   description = "AWS region to deploy to"
+#   default     = ${var.aws_region}
+# }
 
-variable "ssh_username" {
-  type        = string
-  description = "The username to use to connect to the EC2 instance"
-  default     = "{{user `ssh_username`}}"
-}
+# variable "ssh_username" {
+#   type        = string
+#   description = "The username to use to connect to the EC2 instance"
+#   default     = ${var.ssh_username}
+# }
 
 variable "subnet_id" {
   type        = string
@@ -25,11 +25,11 @@ variable "subnet_id" {
   default     = "subnet-0dead14ccdac4b2bd"
 }
 
-variable "ami_regions" {
-  type        = list(string)
-  default     = ["us-east-1"]
-  description = "Regions where AMI should be copied"
-}
+# variable "ami_regions" {
+#   type        = list(string)
+#   default     = ["us-east-1"]
+#   description = "Regions where AMI should be copied"
+# }
 
 source "amazon-ebs" "webapp-ami" {
   ami_name        = "csye6225_${formatdate("YYYY_MM_DD_hh_mm_ss", timestamp())}"
