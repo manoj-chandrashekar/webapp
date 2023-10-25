@@ -10,13 +10,13 @@ packer {
 variable "aws_region" {
   type        = string
   description = "AWS region to deploy to"
-  default     = "${var.aws_region}"
+  default     = "{{user `aws_region`}}"
 }
 
 variable "ssh_username" {
   type        = string
   description = "The username to use to connect to the EC2 instance"
-  default     = "${var.ssh_username}"
+  default     = "{{user `ssh_username`}}"
 }
 
 variable "subnet_id" {
