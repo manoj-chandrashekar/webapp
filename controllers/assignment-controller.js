@@ -57,9 +57,9 @@ const getAll = async (req, res, next) => {
             exclude: ['account_id'],
         },
     });
-    if (assignments.length === 0) {
-        return res.status(404).send();
-    }
+    // if (assignments.length === 0) {
+    //     return res.status(404).send();
+    // }
     res.status(200).json(assignments);
 };
 

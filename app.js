@@ -35,7 +35,8 @@ sequelize.sync()
     processCsv();
   })
   .catch((err) => {
-    console.error('Error synchronizing the database:', err);
+    const error = new HttpError('Error synchronizing the database.', err.code);
+    throw error;
   });
 
 app.use('/healthz', healthRoutes);
