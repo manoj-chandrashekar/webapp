@@ -32,9 +32,12 @@ sudo chown -R csye6225:csye6225 /etc/environment
 sudo chmod -R 755 webapp
 cd webapp
 sudo cp users.csv /home/csye6225/
+sudo cp /home/admin/cloudwatch-config.json /opt/cloudwatch-config.json
+sudo mkdir /var/log/webapp
+sudo chown csye6225:csye6225 /var/log/webapp
+sudo chmod 750 /var/log/webapp
 sudo npm i
 
-sudo cp /home/admin/cloudwatch-config.json /opt/cloudwatch-config.json
 # cd /var/log/
 # sudo touch csye6225.log
 # sudo chmod 775 csye6225.log
