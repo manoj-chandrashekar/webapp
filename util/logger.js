@@ -4,9 +4,9 @@ const fs = require('fs');
 
 // Create log directory if it does not exist
 const logDirectory = '/var/log/tomcat9';
-if (!fs.existsSync(logDirectory)) {
-  fs.mkdirSync(logDirectory, { recursive: true });
-}
+// if (!fs.existsSync(logDirectory)) {
+//   fs.mkdirSync(logDirectory, { recursive: true });
+// }
 
 // Define the custom Winston logger
 const logger = winston.createLogger({
