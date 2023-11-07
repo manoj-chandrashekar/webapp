@@ -12,15 +12,16 @@ const checkConnection = async (req, res) => {
     }
     try {
         await sequelize.authenticate();
-        logger.info('Database connection has been established successfully.');
+        logger.info('GET healthz - Database connection has been established successfully.');
         res.status(200).send();
     } catch(error) {
-        logger.error('Unable to connect to the database:', error);
+        logger.error('GET healthz - Unable to connect to the database:', error);
         res.status(503).send();
     }
 };
 
 const otherMethods = (req, res) => {
+    logger.error('Method not allowed.');
     res.status(405).send();
 };
 

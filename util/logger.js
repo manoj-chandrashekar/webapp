@@ -14,15 +14,10 @@ const logger = winston.createLogger({
   ),
   // Define the transports (where to log the messages to)
   transports: [
-    // Define a file transport for error logs
-    new winston.transports.File({
-      filename: path.join(logDirectory, 'csye6225.error.log'),
-      level: 'error',
-    }),
     // Define a file transport for all logs
     new winston.transports.File({
       filename: path.join(logDirectory, 'csye6225.log'),
-      level: 'info',
+      level: 'debug',
     }),
   ],
   exitOnError: false,

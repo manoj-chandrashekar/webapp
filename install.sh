@@ -38,12 +38,6 @@ sudo chown csye6225:csye6225 /var/log/webapp
 sudo chmod 750 /var/log/webapp
 sudo npm i
 
-# cd /var/log/
-# sudo touch csye6225.log
-# sudo chmod 775 csye6225.log
-# sudo touch csye6225.error.log
-# sudo chmod 775 csye6225.error.log
-
 sudo mv /home/admin/webapp.service /etc/systemd/system/webapp.service
 # sudo chown -R csye6225:csye6225 /etc/systemd/system/webapp.service
 # sudo chmod -R 750 /home/csye6225/webapp

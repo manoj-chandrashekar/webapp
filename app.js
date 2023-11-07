@@ -9,6 +9,7 @@ const Account = require('./models/account');
 const Assignment = require('./models/assignment');
 const HttpError = require('./models/http-error');
 const processCsv = require('./util/process-csv');
+const logger = require('./util/logger');
 
 const healthRoutes = require('./routes/health-routes');
 const assignmentRoutes = require('./routes/assignment-routes');
@@ -35,10 +36,12 @@ Assignment.belongsTo(Account, {
 sequelize.sync()
   .then(() => {
     console.log('Database is synchronized with the model.');
+    logger.info('Database is synchronized with the model.');
     processCsv();
   })
   .catch((err) => {
-    const error = new HttpError('Error synchronizing the database.', err.code);
+    logger.error('Unable to connect to the database:', err);
+    const error = new HttpError('Unable to connect to the database', err.code);
     throw error;
   });
 
@@ -46,6 +49,7 @@ app.use('/healthz', healthRoutes);
 app.use('/v1/assignments', basicAuth, assignmentRoutes);
 
 app.use((req, res, next) => {
+  logger.info('Could not find this route.');
     const error = new HttpError('Could not find this route.', 404);
     throw error;
 });
@@ -56,6 +60,7 @@ app.use((error, req, res, next) => {
     }
     res.status(error.code || 400);
     res.json({message: error.message || 'Bad Request'});
+    logger.error(error);
 });
 
 app.listen(8080);
