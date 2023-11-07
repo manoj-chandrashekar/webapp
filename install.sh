@@ -29,7 +29,7 @@ sudo unzip webapp.zip -d webapp
 sudo rm webapp.zip
 sudo chown -R csye6225:csye6225 webapp
 sudo chown -R csye6225:csye6225 /etc/environment
-sudo chmod -R 750 webapp
+sudo chmod -R 755 webapp
 cd webapp
 sudo cp users.csv /home/csye6225/
 sudo npm i
@@ -43,6 +43,7 @@ sudo chmod 775 csye6225.error.log
 
 sudo mv /home/admin/webapp.service /etc/systemd/system/webapp.service
 sudo chown -R csye6225:csye6225 /etc/systemd/system/webapp.service
+sudo chmod -R 750 /home/csye6225/webapp
 
 sudo systemctl daemon-reload
 sudo systemctl enable webapp
