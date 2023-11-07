@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 // Create log directory if it does not exist
-const logDirectory = '/var/log/tomcat9';
+const logDirectory = '/var/log/';
 // if (!fs.existsSync(logDirectory)) {
 //   fs.mkdirSync(logDirectory, { recursive: true });
 // }
