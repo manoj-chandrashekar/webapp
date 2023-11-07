@@ -12,8 +12,10 @@ const checkConnection = async (req, res) => {
     }
     try {
         await sequelize.authenticate();
+        logger.info('Database connection has been established successfully.');
         res.status(200).send();
     } catch(error) {
+        logger.error('Unable to connect to the database:', error);
         res.status(503).send();
     }
 };

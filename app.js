@@ -9,7 +9,6 @@ const Account = require('./models/account');
 const Assignment = require('./models/assignment');
 const HttpError = require('./models/http-error');
 const processCsv = require('./util/process-csv');
-const logger = require('./util/logger');
 
 const healthRoutes = require('./routes/health-routes');
 const assignmentRoutes = require('./routes/assignment-routes');
@@ -36,12 +35,10 @@ Assignment.belongsTo(Account, {
 sequelize.sync()
   .then(() => {
     console.log('Database is synchronized with the model.');
-    logger.info('Database is synchronized with the model.');
     processCsv();
   })
   .catch((err) => {
     const error = new HttpError('Error synchronizing the database.', err.code);
-    logger.error('Error synchronizing the database'); 
     throw error;
   });
 
