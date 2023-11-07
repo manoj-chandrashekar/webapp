@@ -9,7 +9,7 @@ const Account = require('./models/account');
 const Assignment = require('./models/assignment');
 const HttpError = require('./models/http-error');
 const processCsv = require('./util/process-csv');
-const logger = require('./logger');
+const logger = require('./util/logger');
 
 const healthRoutes = require('./routes/health-routes');
 const assignmentRoutes = require('./routes/assignment-routes');
