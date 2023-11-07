@@ -74,6 +74,11 @@ build {
     destination = "/home/admin/"
   }
 
+  provisioner "file" {
+    source      = "cloudwatch-config.json"
+    destination = "/home/admin/"
+  }
+
   provisioner "shell" {
     scripts = ["./install.sh"]
   }

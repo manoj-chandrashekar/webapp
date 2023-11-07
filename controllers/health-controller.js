@@ -1,4 +1,5 @@
 const sequelize = require('../util/database');
+const logger = require('../util/logger');
 
 const checkConnection = async (req, res) => {
     //to restrict query params in GET request

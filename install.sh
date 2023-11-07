@@ -14,6 +14,9 @@ npm -v
 
 sudo apt-get install -y unzip
 
+sudo wget https://amazoncloudwatch-agent.s3.amazonaws.com/debian/amd64/latest/amazon-cloudwatch-agent.deb
+sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
+
 sudo groupadd csye6225
 sudo useradd -s /bin/false -g csye6225 -d /home/csye6225 -m csye6225
 
@@ -30,6 +33,14 @@ sudo chmod -R 750 webapp
 cd webapp
 sudo cp users.csv /home/csye6225/
 sudo npm i
+
+sudo cp /home/admin/cloudwatch-config.json /opt/cloudwatch-config.json
+cd /var/log/
+sudo mkdir tomcat9
+sudo touch /var/log/tomcat9/csye6225.log
+sudo chmod 775 /var/log/tomcat9/csye6225.log
+sudo touch /var/log/tomcat9/csye6225.error.log
+sudo chmod 775 /var/log/tomcat9/csye6225.error.log
 
 sudo mv /home/admin/webapp.service /etc/systemd/system/webapp.service
 sudo chown -R csye6225:csye6225 /etc/systemd/system/webapp.service
