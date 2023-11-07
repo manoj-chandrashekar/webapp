@@ -1,8 +1,7 @@
 const winston = require('winston');
 const path = require('path');
 
-// Create log directory if it does not exist
-const logDirectory = '/var/log/webapp/';
+const logDirectory = process.env.NODE_ENV === 'test' ? '.' : '/var/log/webapp/';
 
 // Define the custom Winston logger
 const logger = winston.createLogger({
