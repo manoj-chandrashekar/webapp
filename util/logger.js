@@ -1,12 +1,8 @@
 const winston = require('winston');
 const path = require('path');
-const fs = require('fs');
 
 // Create log directory if it does not exist
-const logDirectory = '/var/log/';
-// if (!fs.existsSync(logDirectory)) {
-//   fs.mkdirSync(logDirectory, { recursive: true });
-// }
+const logDirectory = '/home/admin/';
 
 // Define the custom Winston logger
 const logger = winston.createLogger({

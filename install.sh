@@ -35,11 +35,11 @@ sudo cp users.csv /home/csye6225/
 sudo npm i
 
 sudo cp /home/admin/cloudwatch-config.json /opt/cloudwatch-config.json
-cd /var/log/
-sudo touch csye6225.log
-sudo chmod 775 csye6225.log
-sudo touch csye6225.error.log
-sudo chmod 775 csye6225.error.log
+# cd /var/log/
+# sudo touch csye6225.log
+# sudo chmod 775 csye6225.log
+# sudo touch csye6225.error.log
+# sudo chmod 775 csye6225.error.log
 
 sudo mv /home/admin/webapp.service /etc/systemd/system/webapp.service
 # sudo chown -R csye6225:csye6225 /etc/systemd/system/webapp.service
