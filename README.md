@@ -1,6 +1,5 @@
 # My Web Application
 This is a web backend application built using NodeJS and npm.
-demo
 
 ## Prerequisites
 Before you can build and deploy the application, you will need to have the following software installed on your local machine:
