@@ -2,8 +2,11 @@ const { validationResult } = require('express-validator');
 const HttpError = require('../models/http-error');
 const Assignment = require('../models/assignment');
 const logger = require('../util/logger');
+const Lynx = require('lynx');
+const metrics = new Lynx('localhost', 8125);
 
 const createAssignment = async (req, res, next) => {
+    metrics.increment('assignment_POST');
     const assignment = req.body;
     const account = req.account;
 
@@ -54,6 +57,7 @@ const createAssignment = async (req, res, next) => {
 }
 
 const getAll = async (req, res, next) => {
+    metrics.increment('assignment_GET_ALL');
     if (Object.keys(req.query).length > 0 || Object.keys(req.body).length > 0) {
         logger.info('GET v1/assignment - Query params or body passed for getting all assignments');
         return res.status(400).send();
@@ -68,6 +72,7 @@ const getAll = async (req, res, next) => {
 };
 
 const getById = async (req, res, next) => {
+    metrics.increment('assignment_GET_BY_ID');
     if (Object.keys(req.query).length > 0 || Object.keys(req.body).length > 0) {
         logger.info('GET v1/assignment/:id - Query params or body passed for getting assignment by id');
         return res.status(400).send();
@@ -90,6 +95,7 @@ const getById = async (req, res, next) => {
 };
 
 const deleteAssignment = async (req, res, next) => {
+    metrics.increment('assignment_DELETE');
     if (Object.keys(req.query).length > 0 || Object.keys(req.body).length > 0) {
         logger.info('DELETE v1/assignment/:id - Query params or body passed for deleting assignment by id');
         return res.status(400).send();
@@ -115,6 +121,7 @@ const deleteAssignment = async (req, res, next) => {
 };
 
 const updateAssignment = async (req, res, next) => {
+    metrics.increment('assignment_PUT');
     const assignment = req.body;
     const account = req.account;
     const assignmentId = req.params.id;
@@ -168,6 +175,7 @@ const updateAssignment = async (req, res, next) => {
 };
 
 const unsupportedMethods = (req, res, next) => {
+    metrics.increment('assignment_METHOD_NOT_ALLOWED');
     logger.info('Method not allowed.');
     res.status(405).send();
 };

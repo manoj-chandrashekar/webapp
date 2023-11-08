@@ -4,7 +4,7 @@ const Lynx = require('lynx');
 const metrics = new Lynx('localhost', 8125);
 
 const checkConnection = async (req, res) => {
-    metrics.increment('healthz.GET');
+    metrics.increment('healthz_GET');
     //to restrict query params in GET request
     if(Object.keys(req.query).length > 0) {
         res.status(400).send();
@@ -24,6 +24,7 @@ const checkConnection = async (req, res) => {
 };
 
 const otherMethods = (req, res) => {
+    metrics.increment('healthz_METHOD_NOT_ALLOWED')
     logger.error('Method not allowed.');
     res.status(405).send();
 };
