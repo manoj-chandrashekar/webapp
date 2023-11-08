@@ -39,8 +39,8 @@ sudo chmod 750 /var/log/webapp
 sudo npm i
 
 sudo mv /home/admin/webapp.service /etc/systemd/system/webapp.service
-# sudo chown -R csye6225:csye6225 /etc/systemd/system/webapp.service
-# sudo chmod -R 750 /home/csye6225/webapp
+sudo chown csye6225:csye6225 /etc/systemd/system/webapp.service
+sudo chmod -R 750 /home/csye6225/webapp
 sudo apt-get install -y rsyslog
 
 sudo systemctl daemon-reload
