@@ -1,6 +1,7 @@
 const auth = require('basic-auth');
 const bcrypt = require('bcrypt');
 const Account = require('../models/account');
+const logger = require('./logger');
 
 let acc = null;
 
@@ -9,6 +10,7 @@ const basicAuth = async (req, res, next) => {
 
     if(!credentials || !await isValidCredentials(credentials)) {
         res.set('WWW-Authenticate', 'Basic');
+        logger.info('Basic auth failed. Invalid credentials');
         return res.status(401).send();
     }
 

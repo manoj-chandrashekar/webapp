@@ -49,7 +49,6 @@ app.use('/healthz', healthRoutes);
 app.use('/v1/assignments', basicAuth, assignmentRoutes);
 
 app.use((req, res, next) => {
-  logger.info('Could not find this route.');
     const error = new HttpError('Could not find this route.', 404);
     throw error;
 });
@@ -60,7 +59,9 @@ app.use((error, req, res, next) => {
     }
     res.status(error.code || 400);
     res.json({message: error.message || 'Bad Request'});
-    logger.error(error);
+    if(error.code && error.code.toString().startsWith('5')) {
+        logger.error('A server error occured', error);
+    }
 });
 
 app.listen(8080);

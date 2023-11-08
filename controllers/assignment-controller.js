@@ -2,7 +2,6 @@ const { validationResult } = require('express-validator');
 const HttpError = require('../models/http-error');
 const Assignment = require('../models/assignment');
 const logger = require('../util/logger');
-const { log } = require('console');
 
 const createAssignment = async (req, res, next) => {
     const assignment = req.body;
@@ -65,9 +64,6 @@ const getAll = async (req, res, next) => {
             exclude: ['account_id'],
         },
     });
-    // if (assignments.length === 0) {
-    //     return res.status(404).send();
-    // }
     res.status(200).json(assignments);
 };
 
@@ -109,7 +105,7 @@ const deleteAssignment = async (req, res, next) => {
     }
 
     if (assignment.account_id !== account.id) {
-        logger.info('DELETE v1/assignment/:id - User '+account.id+' is not authorized to delete assignment with id '+assignmentId);
+        logger.info('DELETE v1/assignment/:id - User '+account.email+' is not authorized to delete assignment with id '+assignmentId);
         return res.status(403).send();
     }
 
@@ -124,7 +120,7 @@ const updateAssignment = async (req, res, next) => {
     const assignmentId = req.params.id;
 
     if (Object.keys(assignment).length === 0 || Object.keys(req.query).length > 0) {
-        logger.info('PUT v1/assignment/:id - No input body passed for updating');
+        logger.info('PUT v1/assignment/:id - Invalid input or params present for updating');
         return res.status(400).send();
     }
 
@@ -151,7 +147,7 @@ const updateAssignment = async (req, res, next) => {
         }
 
         if (fetchedAssignment.account_id !== account.id) {
-            logger.info('PUT v1/assignment/:id - User '+account.id+' is not authorized to update assignment with id '+assignmentId);
+            logger.info('PUT v1/assignment/:id - User '+account.email+' is not authorized to update assignment with id '+assignmentId);
             return res.status(403).send();
         }
 
