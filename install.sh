@@ -13,6 +13,7 @@ node -v
 npm -v
 
 sudo apt-get install -y unzip
+sudo apt-get install -y rsyslog
 
 sudo wget https://amazoncloudwatch-agent.s3.amazonaws.com/debian/amd64/latest/amazon-cloudwatch-agent.deb
 sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
