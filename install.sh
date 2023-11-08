@@ -13,7 +13,6 @@ node -v
 npm -v
 
 sudo apt-get install -y unzip
-sudo apt-get install -y rsyslog
 
 sudo wget https://amazoncloudwatch-agent.s3.amazonaws.com/debian/amd64/latest/amazon-cloudwatch-agent.deb
 sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
@@ -42,6 +41,7 @@ sudo npm i
 sudo mv /home/admin/webapp.service /etc/systemd/system/webapp.service
 # sudo chown -R csye6225:csye6225 /etc/systemd/system/webapp.service
 # sudo chmod -R 750 /home/csye6225/webapp
+sudo apt-get install -y rsyslog
 
 sudo systemctl daemon-reload
 sudo systemctl enable webapp
