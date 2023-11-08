@@ -33,19 +33,28 @@ Assignment.belongsTo(Account, {
   foreignKey: 'account_id'
 });
 
+let dbConnectionOK = false;
+
 sequelize.sync()
   .then(() => {
     console.log('Database is synchronized with the model.');
     logger.info('Database is synchronized with the model.');
+    dbConnectionOK = true;
     processCsv();
   })
   .catch((err) => {
     logger.error('Unable to connect to the database:', err);
-    const error = new HttpError('Unable to connect to the database', err.code);
-    throw error;
+    dbConnectionOK = false;
   });
 
 app.use('/healthz', healthRoutes);
+app.use((req, res, next) => {
+  if (!dbConnectionOK) {
+    res.status(503).send('Service Unavailable');
+    return;
+  }
+  next();
+});
 app.use('/v1/assignments', basicAuth, assignmentRoutes);
 
 app.use((req, res, next) => {
