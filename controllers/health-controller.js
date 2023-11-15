@@ -2,7 +2,7 @@ const sequelize = require('../util/database');
 const logger = require('../util/logger');
 const Lynx = require('lynx');
 const metrics = new Lynx('localhost', 8125);
-const { fetchInstanceIP } = require('../util/fetch-instance-ip');
+const { fetchInstanceIP } = require('../util/instanceMetadata');
 
 const checkConnection = async (req, res) => {
     metrics.increment('healthz_GET');
