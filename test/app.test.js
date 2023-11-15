@@ -10,10 +10,6 @@ chai.should();
 
 const app = require('../app');
 
-jest.mock('../util/instanceMetadata', () => ({
-    fetchInstanceIP: jest.fn().mockResolvedValue('i-1234567890abcdef0')
-}));
-
 describe('Health check API', () => {
     it('should return a 200 status code', async () => {
         const res = await chai.request(app).get("/healthz")

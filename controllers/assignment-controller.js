@@ -4,6 +4,7 @@ const Assignment = require('../models/assignment');
 const logger = require('../util/logger');
 const Lynx = require('lynx');
 const metrics = new Lynx('localhost', 8125);
+const { fetchInstanceId } = require('../util/instanceMetadata');
 
 const createAssignment = async (req, res, next) => {
     metrics.increment('assignment_POST');
@@ -68,6 +69,8 @@ const getAll = async (req, res, next) => {
             exclude: ['account_id'],
         },
     });
+    const id = await fetchInstanceId();
+    logger.info('GET v1/assignment - Instance id: '+id);
     res.status(200).json(assignments);
 };
 
