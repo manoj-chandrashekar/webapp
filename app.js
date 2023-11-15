@@ -9,6 +9,7 @@ const Account = require('./models/account');
 const Assignment = require('./models/assignment');
 const HttpError = require('./models/http-error');
 const processCsv = require('./util/process-csv');
+const { fetchInstanceIP } = require('./util/instanceMetadata');
 const logger = require('./util/logger');
 
 const healthRoutes = require('./routes/health-routes');
@@ -36,9 +37,10 @@ Assignment.belongsTo(Account, {
 let dbConnectionOK = false;
 
 sequelize.sync()
-  .then(() => {
-    console.log('Database is synchronized with the model.');
-    logger.info('Database is synchronized with the model.');
+  .then(async() => {
+    const ip = await fetchInstanceIP();
+    console.log(`Database is synchronized with the model. Instance IP: ${ip}`);
+    logger.info(`Database is synchronized with the model. Instance IP: ${ip}`);
     dbConnectionOK = true;
     processCsv();
   })
