@@ -20,6 +20,7 @@
     "express-validator": "^7.0.1",
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
+    "jest": "^29.7.0",
     "lynx": "^0.2.0",
     "mariadb": "^3.2.1",
     "morgan": "^1.10.0",
