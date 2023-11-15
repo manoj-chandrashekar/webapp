@@ -1,12 +1,12 @@
 // instanceMetadata.js
 const http = require('http');
 
-function fetchInstanceIP() {
+function fetchInstanceID() {
   return new Promise((resolve, reject) => {
     const options = {
       host: '169.254.169.254',
       path: '/latest/meta-data/instance-id',
-      timeout: 5000,
+      timeout: 3000,
       headers: {
         "Metadata-Flavor": "aws4_request"
       }
@@ -27,4 +27,4 @@ function fetchInstanceIP() {
   });
 }
 
-module.exports = { fetchInstanceIP };
+module.exports = { fetchInstanceID };

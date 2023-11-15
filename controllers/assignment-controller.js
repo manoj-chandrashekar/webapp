@@ -4,7 +4,7 @@ const Assignment = require('../models/assignment');
 const logger = require('../util/logger');
 const Lynx = require('lynx');
 const metrics = new Lynx('localhost', 8125);
-const { fetchInstanceId } = require('../util/instanceMetadata');
+const { fetchInstanceID } = require('../util/instanceMetadata');
 
 const createAssignment = async (req, res, next) => {
     metrics.increment('assignment_POST');
@@ -23,7 +23,7 @@ const createAssignment = async (req, res, next) => {
     }
 
     const errors = validationResult(req);
-    if(!errors.isEmpty()) {
+    if (!errors.isEmpty()) {
         const inputError = new HttpError(errors.array()[0].msg, 400);
         logger.info('POST v1/assignment - Invalid input body passed for creating', inputError);
         return next(inputError);
@@ -69,9 +69,14 @@ const getAll = async (req, res, next) => {
             exclude: ['account_id'],
         },
     });
-    const id = await fetchInstanceId();
-    logger.info('GET v1/assignment - Instance id: '+id);
-    res.status(200).json(assignments);
+    try {
+        const id = await fetchInstanceID();
+        logger.info('GET v1/assignment - Instance id: ' + id);
+        res.status(200).json(assignments);
+    } catch (error) {
+        logger.error('GET v1/assignment - Connection to instance metadata service failed', error);
+        res.status(200).json(assignments);
+    }
 };
 
 const getById = async (req, res, next) => {
@@ -91,7 +96,7 @@ const getById = async (req, res, next) => {
         },
     });
     if (assignment.length === 0) {
-        logger.info('GET v1/assignment/:id - Assignment with id '+assignmentId+' not found');
+        logger.info('GET v1/assignment/:id - Assignment with id ' + assignmentId + ' not found');
         return res.status(404).send();
     }
     res.status(200).json(assignment);
@@ -109,17 +114,17 @@ const deleteAssignment = async (req, res, next) => {
     const assignment = await Assignment.findByPk(assignmentId);
 
     if (!assignment) {
-        logger.info('DELETE v1/assignment/:id - Assignment with id '+assignmentId+' not found');
+        logger.info('DELETE v1/assignment/:id - Assignment with id ' + assignmentId + ' not found');
         return res.status(404).send();
     }
 
     if (assignment.account_id !== account.id) {
-        logger.info('DELETE v1/assignment/:id - User '+account.email+' is not authorized to delete assignment with id '+assignmentId);
+        logger.info('DELETE v1/assignment/:id - User ' + account.email + ' is not authorized to delete assignment with id ' + assignmentId);
         return res.status(403).send();
     }
 
     await assignment.destroy();
-    logger.info('DELETE v1/assignment/:id - Assignment with id '+assignmentId+' deleted successfully');
+    logger.info('DELETE v1/assignment/:id - Assignment with id ' + assignmentId + ' deleted successfully');
     res.status(204).send();
 };
 
@@ -141,7 +146,7 @@ const updateAssignment = async (req, res, next) => {
     }
 
     const errors = validationResult(req);
-    if(!errors.isEmpty()) {
+    if (!errors.isEmpty()) {
         const inputError = new HttpError(errors.array()[0].msg, 400);
         logger.info('PUT v1/assignment/:id - Invalid input body passed for updating', inputError);
         return next(inputError);
@@ -152,19 +157,19 @@ const updateAssignment = async (req, res, next) => {
         const fetchedAssignment = await Assignment.findByPk(assignmentId);
 
         if (!fetchedAssignment) {
-            logger.info('PUT v1/assignment/:id - Assignment with id '+assignmentId+' not found');
+            logger.info('PUT v1/assignment/:id - Assignment with id ' + assignmentId + ' not found');
             return res.status(404).send();
         }
 
         if (fetchedAssignment.account_id !== account.id) {
-            logger.info('PUT v1/assignment/:id - User '+account.email+' is not authorized to update assignment with id '+assignmentId);
+            logger.info('PUT v1/assignment/:id - User ' + account.email + ' is not authorized to update assignment with id ' + assignmentId);
             return res.status(403).send();
         }
 
         await fetchedAssignment.update(assignment, { validate: true });
-        logger.info('PUT v1/assignment/:id - Assignment with id '+assignmentId+' updated successfully');
+        logger.info('PUT v1/assignment/:id - Assignment with id ' + assignmentId + ' updated successfully');
         res.status(204).send();
-    } catch(error) {
+    } catch (error) {
         if (error.name === 'SequelizeValidationError') {
             logger.info('PUT v1/assignment/:id - Invalid input body passed for updating');
             const validationError = new HttpError('Invalid input passed', 400);
