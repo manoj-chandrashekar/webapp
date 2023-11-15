@@ -2,6 +2,7 @@ const sequelize = require('../util/database');
 const logger = require('../util/logger');
 const Lynx = require('lynx');
 const metrics = new Lynx('localhost', 8125);
+const { fetchInstanceIP } = require('../util/fetch-instance-ip');
 
 const checkConnection = async (req, res) => {
     metrics.increment('healthz_GET');
@@ -15,7 +16,8 @@ const checkConnection = async (req, res) => {
     }
     try {
         await sequelize.authenticate();
-        logger.info('GET healthz - Database connection has been established successfully.');
+        const ip = await fetchInstanceIP();
+        logger.info(`GET healthz - Database connection has been established successfully. Instance ID: ${ip}`);
         res.status(200).send();
     } catch(error) {
         logger.error('GET healthz - Unable to connect to the database:', error);

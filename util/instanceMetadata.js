@@ -5,7 +5,7 @@ function fetchInstanceIP() {
   return new Promise((resolve, reject) => {
     const options = {
       host: '169.254.169.254',
-      path: '/latest/meta-data/local-ipv4',
+      path: '/latest/meta-data/instance-id',
       timeout: 5000,
       headers: {
         "Metadata-Flavor": "aws4_request"
