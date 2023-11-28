@@ -10,6 +10,7 @@
   "author": "Manoj Chandrasekaran",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1504.0",
     "basic-auth": "^2.0.1",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",

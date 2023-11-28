@@ -14,6 +14,12 @@ const validateAssignment = [
     check('deadline').not().isEmpty().withMessage('Deadline is required')
 ];
 
+const validateSubmission = [
+    check('assignment_id').not().isEmpty().withMessage('Assignment ID is required'),
+    check('submission_url').not().isEmpty().withMessage('Submission URL is required')
+    .isURL().withMessage('Submission URL must be a valid URL')
+];
+
 router.get('/:id', assignmentController.getById);
 
 router.post('/', validateAssignment, assignmentController.createAssignment);
@@ -23,6 +29,8 @@ router.get('/', assignmentController.getAll);
 router.delete('/:id', assignmentController.deleteAssignment);
 
 router.put('/:id', validateAssignment, assignmentController.updateAssignment);
+
+router.post('/:id/submissions', validateSubmission, assignmentController.createSubmission);
 
 router.patch('/', assignmentController.unsupportedMethods);
 

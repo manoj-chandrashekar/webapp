@@ -13,6 +13,7 @@ const logger = require('./util/logger');
 
 const healthRoutes = require('./routes/health-routes');
 const assignmentRoutes = require('./routes/assignment-routes');
+const Submission = require('./models/submission');
 
 const app = express();
 
@@ -31,6 +32,13 @@ Account.hasMany(Assignment, {
 });
 Assignment.belongsTo(Account, {
   foreignKey: 'account_id'
+});
+
+Assignment.hasMany(Submission, {
+  foreignKey: 'assignment_id'
+});
+Submission.belongsTo(Assignment, {
+  foreignKey: 'assignment_id'
 });
 
 let dbConnectionOK = false;
