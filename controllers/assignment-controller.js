@@ -127,6 +127,13 @@ const deleteAssignment = async (req, res, next) => {
         return res.status(403).send();
     }
 
+    const submissionCount = await assignment.countSubmissions();
+    if (submissionCount > 0) {
+        logger.info('DELETE v1/assignment/:id - Assignment with id ' + assignmentId + ' has submissions');
+        const conflictError = new HttpError('Cannot delete assignment as there are submissions against it.', 409);
+        return next(conflictError);
+    }
+
     await assignment.destroy();
     logger.info('DELETE v1/assignment/:id - Assignment with id ' + assignmentId + ' deleted successfully');
     res.status(204).send();
