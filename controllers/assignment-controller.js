@@ -245,6 +245,7 @@ const createSubmission = async (req, res, next) => {
                 const errorOutput = new HttpError('Maximum number of submission attempts reached for assignment', 400);
                 next(errorOutput);
             }
+            await userAssignment.increment('attempts');
         } else {
             await UserAssignment.create({
                 user_id: account.id,
@@ -255,7 +256,6 @@ const createSubmission = async (req, res, next) => {
 
         const createdSubmission = await Submission.create(submission);
         await createdSubmission.setAssignment(fetchedAssignment);
-        await userAssignment.increment('attempts');
 
         const message = {
             name: account.first_name,
