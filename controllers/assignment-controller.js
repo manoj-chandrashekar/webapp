@@ -207,13 +207,13 @@ const createSubmission = async (req, res, next) => {
     if (submission.id || submission.id === '' || submission.submission_created || submission.submission_updated) {
         logger.info('POST v1/assignment/:id/submissions - Invalid input body passed for creating');
         const inputError = new HttpError('Invalid input passed', 400);
-        next(inputError);
+        return next(inputError);
     }
 
     if(assignmentId !== submission.assignment_id) {
         logger.info('POST v1/assignment/:id/submissions - Assignment id in path and body do not match');
         const inputError = new HttpError('Assignment id in path and body do not match', 400);
-        next(inputError);
+        return next(inputError);
     }
 
     const errors = validationResult(req);
@@ -229,14 +229,14 @@ const createSubmission = async (req, res, next) => {
         if (!fetchedAssignment) {
             logger.info('POST v1/assignment/:id/submissions - Assignment with id ' + assignmentId + ' not found');
             const errorOutput = new HttpError('Assignment with id ' + assignmentId + ' not found', 400);
-            next(errorOutput);
+            return next(errorOutput);
         }
 
         const currentDate = new Date();
         if (currentDate > new Date(fetchedAssignment.deadline)) {
             logger.info('POST v1/assignment/:id/submissions - Assignment with id ' + assignmentId + ' passed deadline');
             const errorOutput = new HttpError('Assignment deadline has passed', 423);
-            next(errorOutput);
+            return next(errorOutput);
         }
 
         const userAssignment = await UserAssignment.findOne({
@@ -250,7 +250,7 @@ const createSubmission = async (req, res, next) => {
             if(userAssignment.attempts >= fetchedAssignment.num_of_attempts) {
                 logger.info('POST v1/assignment/:id/submissions - Maximum number of attempts reached for assignment ' + assignmentId + ' for user ' + account.email);
                 const errorOutput = new HttpError('Maximum number of submission attempts reached for assignment', 403);
-                next(errorOutput);
+                return next(errorOutput);
             }
             await userAssignment.increment('attempts');
         } else {
