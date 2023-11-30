@@ -235,7 +235,7 @@ const createSubmission = async (req, res, next) => {
         const currentDate = new Date();
         if (currentDate > new Date(fetchedAssignment.deadline)) {
             logger.info('POST v1/assignment/:id/submissions - Assignment with id ' + assignmentId + ' passed deadline');
-            const errorOutput = new HttpError('Assignment deadline has passed', 400);
+            const errorOutput = new HttpError('Assignment deadline has passed', 423);
             next(errorOutput);
         }
 
@@ -249,7 +249,7 @@ const createSubmission = async (req, res, next) => {
         if(userAssignment) {
             if(userAssignment.attempts >= fetchedAssignment.num_of_attempts) {
                 logger.info('POST v1/assignment/:id/submissions - Maximum number of attempts reached for assignment ' + assignmentId + ' for user ' + account.email);
-                const errorOutput = new HttpError('Maximum number of submission attempts reached for assignment', 400);
+                const errorOutput = new HttpError('Maximum number of submission attempts reached for assignment', 403);
                 next(errorOutput);
             }
             await userAssignment.increment('attempts');
