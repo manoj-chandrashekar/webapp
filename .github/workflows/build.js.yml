@@ -81,4 +81,50 @@ jobs:
         env:
           PACKER_LOG: 1
 
-          
+      - name: Checkout to demo
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_DEMO_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_DEMO_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Extract AMI ID
+        id: extract_ami
+        run: |
+          AMI_ID=$(echo ${{ steps.packer_build.outputs.stdout }} | grep -oP 'ami-\w+')
+          echo "AMI_ID=$AMI_ID" >> $GITHUB_ENV
+
+      - name: Fetch Current Launch Template ID
+        id: fetch_template
+        run: |
+          TEMPLATE_ID=$(aws ec2 describe-launch-templates --query 'LaunchTemplates[0].LaunchTemplateId' --output text --region us-east-1)
+          echo "TEMPLATE_ID=$TEMPLATE_ID" >> $GITHUB_ENV
+
+      - name: Create new Launch Template version
+        run: |
+          aws ec2 create-launch-template-version --launch-template-id ${{ env.TEMPLATE_ID }} --source-version $Latest --launch-template-data '{"ImageId":"${{ env.AMI_ID }}"}' --region us-east-1
+
+      - name: Update Auto-scaling Group
+        run: |
+          aws autoscaling update-auto-scaling-group --auto-scaling-group-name appAutoScalingGroup --launch-template '{"LaunchTemplateId":"${{ env.TEMPLATE_ID }}","Version":"$Latest"}'
+
+      - name: Start Instance Refresh
+        run: |
+          aws autoscaling start-instance-refresh --auto-scaling-group-name appAutoScalingGroup --strategy "Rolling" --desired-configuration '{"MixedInstancesPolicy": {"LaunchTemplate": {"LaunchTemplateSpecification": {"LaunchTemplateId": "'"$TEMPLATE_ID"'","Version": "$Latest"},"Overrides": [{"InstanceType": "t2.micro"}]}}}' --region us-east-1
+
+      - name: Wait for Instance Refresh to Complete
+        run: |
+          while : ; do
+            STATUS=$(aws autoscaling describe-instance-refreshes --auto-scaling-group-name appAutoScalingGroup --query 'InstanceRefreshes[0].Status' --output text --region us-east-1)
+            if [[ $STATUS == 'Successful' ]]; then
+              echo "Instance Refresh Status: $STATUS"
+              break
+            elif [[ $STATUS == 'Failed' ]]; then
+              echo "Instance Refresh Failed"
+              exit 1
+            fi
+            else
+              echo "Waiting for instance refresh... Status: $STATUS"
+              sleep 30
+            fi
+          done
