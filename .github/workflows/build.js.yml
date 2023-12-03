@@ -92,7 +92,7 @@ jobs:
       - name: Extract AMI ID
         id: extract_ami
         run: |
-          AMI_ID=$(echo ${{ steps.packer_build.outputs.stdout }} | grep -oP 'ami-\w+')
+          AMI_ID=$(jq -r '.builds[-1].artifact_id' packer-manifest.json | cut -d ":" -f2)
           echo "AMI_ID=$AMI_ID" >> $GITHUB_ENV
 
       - name: Fetch Current Launch Template ID
