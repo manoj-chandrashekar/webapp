@@ -136,7 +136,9 @@ jobs:
             elif [[ $STATUS == 'Failed' ]]; then
               echo "Instance Refresh Failed"
               exit 1
-            fi
+            elif [[ $STATUS == 'Cancelled']]; then
+              echo "Instance Refresh Cancelled"
+              exit 1
             else
               echo "Waiting for instance refresh... Status: $STATUS"
               sleep 30
