@@ -109,18 +109,27 @@ jobs:
           --launch-template-data '{"ImageId":"${{ env.AMI_ID }}"}' \
           --region us-east-1
 
+      - name: Get Auto-scaling Group Name
+        id: get_asg_name
+        run: |
+          ASG_PREFIX="appAutoScalingGroup"
+          ASG_NAME=$(aws autoscaling describe-auto-scaling-groups --region us-east-1 \
+              --query "AutoScalingGroups[?starts_with(AutoScalingGroupName, \`${ASG_PREFIX}\`)].AutoScalingGroupName | [0]" \
+              --output text)
+          echo "ASG_NAME=$ASG_NAME" >> $GITHUB_ENV
+
       - name: Update Auto-scaling Group
         run: |
-          aws autoscaling update-auto-scaling-group --auto-scaling-group-name appAutoScalingGroup --launch-template '{"LaunchTemplateId":"${{ env.TEMPLATE_ID }}","Version":"$Latest"}'
+          aws autoscaling update-auto-scaling-group --auto-scaling-group-name ${{ env.ASG_NAME }} --launch-template '{"LaunchTemplateId":"${{ env.TEMPLATE_ID }}","Version":"$Latest"}'
 
       - name: Start Instance Refresh
         run: |
-          aws autoscaling start-instance-refresh --auto-scaling-group-name appAutoScalingGroup --strategy "Rolling" --desired-configuration '{"MixedInstancesPolicy": {"LaunchTemplate": {"LaunchTemplateSpecification": {"LaunchTemplateId": "'"$TEMPLATE_ID"'","Version": "$Latest"},"Overrides": [{"InstanceType": "t2.micro"}]}}}' --region us-east-1
+          aws autoscaling start-instance-refresh --auto-scaling-group-name ${{ env.ASG_NAME }} --strategy "Rolling" --desired-configuration '{"MixedInstancesPolicy": {"LaunchTemplate": {"LaunchTemplateSpecification": {"LaunchTemplateId": "'"$TEMPLATE_ID"'","Version": "$Latest"},"Overrides": [{"InstanceType": "t2.micro"}]}}}' --region us-east-1
 
       - name: Wait for Instance Refresh to Complete
         run: |
           while : ; do
-            STATUS=$(aws autoscaling describe-instance-refreshes --auto-scaling-group-name appAutoScalingGroup --query 'InstanceRefreshes[0].Status' --output text --region us-east-1)
+            STATUS=$(aws autoscaling describe-instance-refreshes --auto-scaling-group-name ${{ env.ASG_NAME }} --query 'InstanceRefreshes[0].Status' --output text --region us-east-1)
             if [[ $STATUS == 'Successful' ]]; then
               echo "Instance Refresh Status: $STATUS"
               break
