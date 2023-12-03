@@ -136,7 +136,7 @@ jobs:
             elif [[ $STATUS == 'Failed' ]]; then
               echo "Instance Refresh Failed"
               exit 1
-            elif [[ $STATUS == 'Cancelled']]; then
+            elif [[ $STATUS == 'Cancelled' ]]; then
               echo "Instance Refresh Cancelled"
               exit 1
             else
