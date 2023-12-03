@@ -63,7 +63,7 @@ app.use((req, res, next) => {
   }
   next();
 });
-app.use('/v2/assignments', basicAuth, assignmentRoutes);
+app.use('/v3/assignments', basicAuth, assignmentRoutes);
 
 app.use((req, res, next) => {
     const error = new HttpError('Could not find this route.', 404);
