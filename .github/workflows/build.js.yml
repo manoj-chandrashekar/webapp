@@ -103,7 +103,11 @@ jobs:
 
       - name: Create new Launch Template version
         run: |
-          aws ec2 create-launch-template-version --launch-template-id ${{ env.TEMPLATE_ID }} --source-version $Latest --launch-template-data '{"ImageId":"${{ env.AMI_ID }}"}' --region us-east-1
+          aws ec2 create-launch-template-version --launch-template-id ${{ env.TEMPLATE_ID }} \
+          --version-description LatestVersion \
+          --source-version $(aws ec2 describe-launch-template-versions --launch-template-id ${{ env.TEMPLATE_ID }} --query 'LaunchTemplateVersions | sort_by(@, &VersionNumber) | [-1].VersionNumber' --output text) \
+          --launch-template-data '{"ImageId":"${{ env.AMI_ID }}"}' \
+          --region us-east-1
 
       - name: Update Auto-scaling Group
         run: |
